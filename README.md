@@ -43,9 +43,9 @@ To get started with the VR game, follow these steps:
 - **Blender**: 3D modeling software for creating assets.
 - **C#**: Programming language for scripting within Unity.
 
-## Contributing
-Contributions are welcome! If you'd like to contribute to any of these project, please fork the repository and create a pull request with your changes.
+## 📞 Contact Me
+If you have any questions or would like to discuss these projects further, feel free to reach out:
 
----
+- **Email:** rayaanhaider04@hotmail.com
 
-Feel free to reach out if you have any questions or suggestions!
+I’d love to hear your feedback or collaborate on future projects!
