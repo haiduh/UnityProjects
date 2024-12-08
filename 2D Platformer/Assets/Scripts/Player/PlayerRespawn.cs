@@ -19,20 +19,29 @@ public class PlayerRespawn : MonoBehaviour
 
     public void CheckRespawn()
     {
-        //check for the last checkpoint
+        // Check for the last checkpoint
         if (currentCheckpoint == null)
         {
             playerHealth.lifeDecrease(false);
             uiManager.GameOver();
-
             return;
         }
-  
 
+        // Move the player to the last checkpoint
         transform.position = currentCheckpoint.position;
+
+        // Reset player health
         playerHealth.Respawn();
-        Camera.main.GetComponent<CameraMovement>().MovetoNewCheckpoint(currentCheckpoint.parent); //resets the camera back to the checkpoint
+
+        // Reset the camera back to the checkpoint
+        CameraMovement cameraMovement = Camera.main.GetComponent<CameraMovement>();
+        cameraMovement.MovetoNewCheckpoint(currentCheckpoint.parent);
+
+        // Enable follow mode after resetting the camera
+        cameraMovement.follow = true;
+        cameraMovement.FollowMode();
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

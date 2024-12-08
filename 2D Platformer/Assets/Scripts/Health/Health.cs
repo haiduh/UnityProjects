@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private float startingHealth;
+    [SerializeField] private float baseHealth;
     [SerializeField] private float totalLives;
     [SerializeField] private float healthGainDuration;
     [SerializeField] private float healthFlashes;
@@ -112,8 +113,8 @@ public class Health : MonoBehaviour
     public void gainHealth(float gain)
     {
         // Increase max health and current health when a heart is collected
-        startingHealth += gain;  // Increase the player's max health
-        currentHealth = Mathf.Clamp(currentHealth + gain, 0, startingHealth);  // Increase current health without exceeding max health
+        startingHealth += gain; // Increase the player's max health
+        currentHealth = Mathf.Clamp(currentHealth + gain, 0, startingHealth); // Increase current health without exceeding max health
 
         StartCoroutine(gainHealthFunc());
     }
@@ -121,7 +122,11 @@ public class Health : MonoBehaviour
     public void Respawn()
     {
         dead = false;
+
+        // Reset health to the base health value
+        startingHealth = baseHealth;
         currentHealth = startingHealth;
+
         animator.ResetTrigger("die");
         animator.Play("idle");
         StartCoroutine(Invulnerability());
@@ -129,6 +134,7 @@ public class Health : MonoBehaviour
         foreach (Behaviour component in components)
             component.enabled = true;
     }
+
 
     //Used because of the yield return waitseconds function
     private IEnumerator Invulnerability()

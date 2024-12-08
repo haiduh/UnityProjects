@@ -47,7 +47,7 @@ public class BossHealth : MonoBehaviour
 
         if (currentHealth > 0)
         {
-            // Trigger hurt animation and sound
+            // Trigger hurt sound
             SoundManager.instance.playSound(hurtSound);
 
             // Check if the boss should become enraged
@@ -81,17 +81,33 @@ public class BossHealth : MonoBehaviour
     /// </summary>
     public void Die()
     {
+        if (dead) return;
+
         dead = true;
 
-        // Trigger death animation and sound
-        animator.SetTrigger("die");
-        SoundManager.instance.playSound(deathSound);
+        // Stop the boss background music
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.changeBackgroundMusic(null); // Stop background music
+        }
+
+        // Play the death sound
+        if (SoundManager.instance != null && deathSound != null)
+        {
+            SoundManager.instance.playSound(deathSound); // Play the death sound
+        }
+
+        // Trigger death animation
+        if (animator != null)
+        {
+            animator.SetTrigger("die");
+        }
 
         // Disable components after a short delay
         foreach (Behaviour component in components)
             component.enabled = false;
 
-        // Destroy boss object after a delay (for death animation)
+        // Destroy boss object after a delay
         Destroy(gameObject, 8f);
     }
 

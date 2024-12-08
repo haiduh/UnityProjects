@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7149155964285125368}
   - component: {fileID: 4150450421742515372}
   - component: {fileID: 8145914730768516562}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Iceball
   m_TagString: Iceball
   m_Icon: {fileID: 0}

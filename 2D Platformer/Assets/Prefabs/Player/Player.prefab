@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1175174769
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 901639f1dddd7b04aa3c943786d274d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,6 +213,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   jumpSound: {fileID: 8300000, guid: 3c5c52ce9e504bb4a82c5b5461d465df, type: 3}
+  canMove: 1
 --- !u!114 &4549930266739015832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  baseHealth: 3
   totalLives: 3
   healthGainDuration: 1
   healthFlashes: 1

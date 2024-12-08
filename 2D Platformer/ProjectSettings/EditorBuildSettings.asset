@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Levels/Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Levels/Level2Joke.unity
+    guid: f6940e43c916fbc4d99b784ceea76390
+  - enabled: 1
     path: Assets/Levels/Level2.unity
     guid: e3fba5c5056d9fb438cd537e8f7b746f
   - enabled: 1

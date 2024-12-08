@@ -68,13 +68,14 @@ public class MeleeEnemy : MonoBehaviour
 
         if (hit.collider != null)
         {
-            // Ensure playerHealth is assigned only when a valid player object is detected
-            playerHealth = hit.transform.GetComponent<Health>();
+            // Use GetComponentInParent or GetComponentInChildren to check for Health
+            playerHealth = hit.transform.GetComponent<Health>()
+                           ?? hit.transform.GetComponentInParent<Health>()
+                           ?? hit.transform.GetComponentInChildren<Health>();
 
-            // If the player object no longer has health, reset playerHealth to null
             if (playerHealth == null)
             {
-                Debug.LogWarning("Player detected but no Health component found.");
+                Debug.LogWarning($"Player detected but no Health component found on {hit.transform.name}");
             }
         }
         else
@@ -82,8 +83,9 @@ public class MeleeEnemy : MonoBehaviour
             playerHealth = null;  // Reset playerHealth if player is not visible
         }
 
-        return hit.collider != null;
+        return hit.collider != null && playerHealth != null;
     }
+
 
     private void OnDrawGizmos()
     {

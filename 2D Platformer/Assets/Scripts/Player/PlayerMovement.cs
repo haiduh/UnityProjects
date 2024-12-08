@@ -148,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
     private bool hasWall()
     {
         // Create a narrower BoxCast to check for walls
+        
         Vector2 boxSize = new Vector2(boxCollider.bounds.size.x * 0.5f, boxCollider.bounds.size.y * 0.8f);
         Vector2 direction = new Vector2(transform.localScale.x, 0); // Check only in the direction the player is facing
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxSize, 0, direction, 0.1f, wallLayer);
