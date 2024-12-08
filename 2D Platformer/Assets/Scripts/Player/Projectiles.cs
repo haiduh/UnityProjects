@@ -6,6 +6,7 @@ public class Projectiles : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float enemyDamage;
+    [SerializeField] private float bossDamage;
     private float direction;
     private bool hit;
     private float projectileLife;
@@ -31,7 +32,7 @@ public class Projectiles : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Iceball") && !collision.CompareTag("Transition"))
+        if (!collision.CompareTag("Iceball") && !collision.CompareTag("Transition") && !collision.CompareTag("Trap"))
             { 
                 hit = true;
                 animator.SetTrigger("explode");
@@ -41,9 +42,14 @@ public class Projectiles : MonoBehaviour
             return;
         }
 
-        if (collision.tag == "Enemy")
+        if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<Health>().damageTaken(enemyDamage);
+        }
+
+        if (collision.CompareTag("Boss"))
+        {
+            collision.GetComponent<BossHealth>().TakeDamage(bossDamage);
         }
     }
 

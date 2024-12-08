@@ -1,17 +1,21 @@
 using System.Collections;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private float startingHealth;
+    [SerializeField] private float totalLives;
     [SerializeField] private float healthGainDuration;
     [SerializeField] private float healthFlashes;
 
     public float currentHealth { get; set; }
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private bool dead;
+    public bool dead { get; set; }
+    private UIManager uiManager;
 
     [Header("iFrames")]
     [SerializeField] private float invulnerabilityDuration;
@@ -24,14 +28,30 @@ public class Health : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip hurtSound;
 
+    [Header("UI")]
+    [SerializeField] private Text livesText;
+
+    [Header("Settings")]
+    [SerializeField] private bool isPlayer; // True if attached to player, false for enemies
+
+
     private void Start()
     {
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        uiManager = FindObjectOfType<UIManager>();
+
+        if (livesText != null)
+        {
+            livesText.gameObject.SetActive(false);
+        }
+
+        UpdateLivesDisplay();
     }
 
-    public void damageTaken (float damage)
+
+    public void damageTaken(float damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, startingHealth);
 
@@ -45,7 +65,6 @@ public class Health : MonoBehaviour
         {
             if (!dead)
             {
-                
                 foreach (Behaviour component in components)
                     component.enabled = false;
 
@@ -54,8 +73,40 @@ public class Health : MonoBehaviour
 
                 dead = true;
                 SoundManager.instance.playSound(deathSound);
+
+                if (isPlayer) // Only decrease lives and trigger GameOver for the player
+                {
+                    lifeDecrease(true);
+
+                    if (totalLives <= 0)
+                        uiManager.GameOver();
+                }
             }
         }
+    }
+
+
+    public void ActivateLivesUI()
+    {
+        if (livesText != null)
+            livesText.gameObject.SetActive(true); // Show lives UI
+    }
+
+
+    public void lifeDecrease(bool noCheckpoint)
+    {
+        if (noCheckpoint)
+        {
+            totalLives--; // Decrease total lives only after death
+            UpdateLivesDisplay();
+        }
+    }
+
+    private void UpdateLivesDisplay()
+    {
+        // Update the text with the current number of lives
+        if (livesText != null)
+            livesText.text = "x" + totalLives.ToString();
     }
 
     public void gainHealth(float gain)
@@ -71,7 +122,6 @@ public class Health : MonoBehaviour
     {
         dead = false;
         currentHealth = startingHealth;
-        Debug.Log(startingHealth);
         animator.ResetTrigger("die");
         animator.Play("idle");
         StartCoroutine(Invulnerability());
@@ -108,7 +158,6 @@ public class Health : MonoBehaviour
         //Duration of invulnerability
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }
-
     private void Deactivate()
     {
         gameObject.SetActive(false);

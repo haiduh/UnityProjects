@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5465926813999422516}
   - component: {fileID: 222969784599815805}
   - component: {fileID: 7749435874297225703}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spikehead
-  m_TagString: Enemy
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -25,23 +25,30 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask trapLayer; // Trap detection layer
 
     [Header("SFX")]
-    [SerializeField] private AudioClip jumpSound; 
+    [SerializeField] private AudioClip jumpSound;
+
+    public bool canMove = true; // Flag to control whether player can move
+
 
     private Rigidbody2D body;
     private Animator animator;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
+    private Health playerHealth;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        playerHealth = GetComponent<Health>();
     }
 
     private void Update()
     {
+        if (!canMove) return; // Skip movement if canMove is false
+
         horizontalInput = Input.GetAxis("Horizontal");
 
         // Flip character based on movement direction
@@ -54,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("run", horizontalInput != 0);
         animator.SetBool("grounded", isGrounded());
 
-        //Jump
+        // Jump logic
         if ((Input.GetKeyDown(KeyCode.Space) ||
              Input.GetKeyDown(KeyCode.UpArrow) ||
              Input.GetKeyDown(KeyCode.W)))
@@ -62,32 +69,35 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        //Adjustable Jump Height
-        if((Input.GetKeyUp(KeyCode.Space) ||
+        // Adjustable Jump Height
+        if ((Input.GetKeyUp(KeyCode.Space) ||
             Input.GetKeyUp(KeyCode.UpArrow) ||
-            Input.GetKeyUp(KeyCode.W)) && 
+            Input.GetKeyUp(KeyCode.W)) &&
             body.velocity.y > 0)
-            body.velocity = new Vector2 (body.velocity.x, body.velocity.y/2);
+            body.velocity = new Vector2(body.velocity.x, body.velocity.y / 2);
 
         if (hasWall())
         {
             body.gravityScale = 0;
-            body.velocity = Vector2.zero;
+            body.velocity = new Vector2(0, body.velocity.y); // Retain vertical velocity to prevent freezing mid-air
         }
         else
         {
             body.gravityScale = 7;
-            body.velocity = new Vector2 (horizontalInput * speed, body.velocity.y);
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+        }
 
-            if (isGrounded())
-            {
-                airCounter = airTime; //Resets the counter
-                jumpCounter = extraJumps; //Resets the counter
-            }
-            else 
-                airCounter -= Time.deltaTime;
+        if (isGrounded())
+        {
+            airCounter = airTime; // Reset air jump counter
+            jumpCounter = extraJumps; // Reset extra jump counter
+        }
+        else
+        {
+            airCounter -= Time.deltaTime; // Decrease air time counter
         }
     }
+
 
     private void Jump()
     {
@@ -137,22 +147,23 @@ public class PlayerMovement : MonoBehaviour
 
     private bool hasWall()
     {
-        // Check if the player is touching a wall using a BoxCast
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
+        // Create a narrower BoxCast to check for walls
+        Vector2 boxSize = new Vector2(boxCollider.bounds.size.x * 0.5f, boxCollider.bounds.size.y * 0.8f);
+        Vector2 direction = new Vector2(transform.localScale.x, 0); // Check only in the direction the player is facing
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxSize, 0, direction, 0.1f, wallLayer);
+
         return raycastHit.collider != null;
     }
+
 
     public bool canAttack()
     {
         return isGrounded() && !hasWall();
     }
 
-    //cutscene manager
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Transition"))
-                horizontalInput = 0;
-                Debug.Log("Entered Cutscene");
-        
+        if (collision.CompareTag("Death"))
+            playerHealth.damageTaken(99);
     }
 }

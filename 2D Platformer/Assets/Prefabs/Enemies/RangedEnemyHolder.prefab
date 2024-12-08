@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2494760073320231214}
   - component: {fileID: 5048980627842564975}
   - component: {fileID: 4287123181319381137}
-  - component: {fileID: 8111073574256500471}
   - component: {fileID: 5256155786354006705}
   - component: {fileID: 3784257994997114214}
+  - component: {fileID: 707461307663008187}
+  - component: {fileID: 8243744360781436868}
   m_Layer: 10
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -156,27 +157,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7467257, y: 1.401589}
   m_EdgeRadius: 0
---- !u!114 &8111073574256500471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660556021183454521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 942a7709e52ecc6408b2b0f233ee4718, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 3
-  healthGainDuration: 0
-  healthFlashes: 0
-  invulnerabilityDuration: 0
-  damageFlashes: 0
-  components:
-  - {fileID: 5256155786354006705}
-  deathSound: {fileID: 8300000, guid: f60a525bcb6236a45bb3a935aa5e6dbf, type: 3}
-  hurtSound: {fileID: 8300000, guid: 5d16b3581826d2f498a7c471e80330ea, type: 3}
 --- !u!114 &5256155786354006705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +203,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+--- !u!114 &707461307663008187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660556021183454521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942a7709e52ecc6408b2b0f233ee4718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 3
+  totalLives: 0
+  healthGainDuration: 0
+  healthFlashes: 0
+  invulnerabilityDuration: 0
+  damageFlashes: 0
+  components:
+  - {fileID: 5256155786354006705}
+  deathSound: {fileID: 8300000, guid: f60a525bcb6236a45bb3a935aa5e6dbf, type: 3}
+  hurtSound: {fileID: 8300000, guid: 5d16b3581826d2f498a7c471e80330ea, type: 3}
+  livesText: {fileID: 0}
+  isPlayer: 0
+--- !u!114 &8243744360781436868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660556021183454521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3663eb0f5bb052d42a51d17c6d7a9a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 3
 --- !u!1 &1391435460950053333
 GameObject:
   m_ObjectHideFlags: 0

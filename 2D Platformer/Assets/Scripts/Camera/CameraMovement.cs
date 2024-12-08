@@ -23,6 +23,8 @@ public class CameraMovement : MonoBehaviour
     private float lookAhead; // Distance the camera looks ahead
 
     private bool isTransitioning = false; // Flag to check if transition is active
+    private bool isCheckpoint;
+    public bool follow;
 
     private void Update()
     {
@@ -63,7 +65,9 @@ public class CameraMovement : MonoBehaviour
             {
                 transform.position = targetPosition;
                 isTransitioning = false; // Transition complete
-                enableFollow = true; // Re-enable follow mode
+                FollowMode();
+
+                if (isCheckpoint == true) return;
                 Debug.Log("Transition complete, following player.");
 
                 // Fade to clear after completing the transition
@@ -72,8 +76,16 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    public void MovetoNewEnvironment(Transform newEnvironment)
+    public void MovetoNewCheckpoint(Transform checkPoint)
     {
+        isTransitioning = true; // Start the transition
+        isCheckpoint = true;
+        enableFollow = false; // Disable follow mode during the transition
+        targetPosX = checkPoint.position.x;
+    }
+
+    public void MovetoNewEnvironment(Transform newEnvironment)
+    { 
         StartCoroutine(PerformTransition(newEnvironment));
     }
 
@@ -129,9 +141,19 @@ public class CameraMovement : MonoBehaviour
             blackScreen.gameObject.SetActive(false);
         }
     }
-    public void EnableFollowMode()
+    public void FollowMode()
     {
-        enableFollow = true; // Re-enable follow mode
-        Debug.Log("Follow mode enabled.");
+        if (follow)
+        {
+            enableFollow = true; // Re-enable follow mode
+            Debug.Log("Follow mode enabled.");
+        }
+        else
+        {
+            enableFollow = false; // Disable follow mode
+            Debug.Log("Follow mode disabled.");
+        }
     }
+
+
 }

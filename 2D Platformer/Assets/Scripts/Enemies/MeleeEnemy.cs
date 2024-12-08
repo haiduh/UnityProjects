@@ -13,7 +13,7 @@ public class MeleeEnemy : MonoBehaviour
 
     [Header("Player Layer")]
     [SerializeField] private LayerMask playerLayer;
-    
+
     [Header("Sounds")]
     [SerializeField] private AudioClip meleeAttackSound;
 
@@ -24,8 +24,18 @@ public class MeleeEnemy : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>(); 
+        animator = GetComponent<Animator>();
         enemyPatrol = GetComponentInParent<EnemyPatrol>();
+
+        // Ensure boxCollider is assigned
+        if (boxCollider == null)
+        {
+            boxCollider = GetComponent<BoxCollider2D>();
+            if (boxCollider == null)
+            {
+                Debug.LogError("BoxCollider2D is not assigned and couldn't be found on " + gameObject.name);
+            }
+        }
     }
 
     private void Update()
@@ -34,8 +44,8 @@ public class MeleeEnemy : MonoBehaviour
 
         if (playerVisible())
         {
-            //Attack only when player in sight
-            if (cooldownTimer >= attackCooldown && playerHealth.currentHealth > 0)
+            // Attack only when the player is visible and playerHealth is not null
+            if (cooldownTimer >= attackCooldown && playerHealth != null && playerHealth.currentHealth > 0)
             {
                 cooldownTimer = 0;
                 animator.SetTrigger("meleeattack");
@@ -43,38 +53,54 @@ public class MeleeEnemy : MonoBehaviour
             }
         }
 
-        if (enemyPatrol != null) 
+        if (enemyPatrol != null)
             enemyPatrol.enabled = !playerVisible();
     }
 
     private bool playerVisible()
     {
-        RaycastHit2D hit = Physics2D.BoxCast
-            (boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, 
-             new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
-             0,Vector2.left, 0, playerLayer);
+        if (boxCollider == null) return false;  // Exit if boxCollider is not assigned
 
-        if(hit.collider != null)
+        RaycastHit2D hit = Physics2D.BoxCast(
+            boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
+            0, Vector2.left, 0, playerLayer);
+
+        if (hit.collider != null)
         {
+            // Ensure playerHealth is assigned only when a valid player object is detected
             playerHealth = hit.transform.GetComponent<Health>();
+
+            // If the player object no longer has health, reset playerHealth to null
+            if (playerHealth == null)
+            {
+                Debug.LogWarning("Player detected but no Health component found.");
+            }
+        }
+        else
+        {
+            playerHealth = null;  // Reset playerHealth if player is not visible
         }
 
         return hit.collider != null;
- 
     }
 
     private void OnDrawGizmos()
     {
+        if (boxCollider == null) return; // Exit if boxCollider is not assigned
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+        Gizmos.DrawWireCube(
+            boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z)
+        );
     }
 
     private void damagePlayer()
     {
-        if (playerVisible())
+        if (playerVisible() && playerHealth != null)
         {
-            //Damage the player in range
+            // Damage the player if they are visible and playerHealth is assigned
             playerHealth.damageTaken(damage);
         }
     }
