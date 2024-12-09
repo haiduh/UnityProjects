@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,13 +9,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject settingsMenu;
 
     private void Awake()
-    { 
+    {
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
     }
 
     public void playGame()
-    { 
+    {
+        // Start the cutscene before loading the game
         SceneManager.LoadScene(1);
     }
 

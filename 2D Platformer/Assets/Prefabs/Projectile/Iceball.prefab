@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   enemyDamage: 1
-  bossDamage: 10
+  bossDamage: 5
 --- !u!61 &7149155964285125368
 BoxCollider2D:
   m_ObjectHideFlags: 0

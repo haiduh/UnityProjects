@@ -51,7 +51,7 @@ public class Transition : MonoBehaviour
     }
 
 
-    private void TeleportPlayer(Transform player)
+     void TeleportPlayer(Transform player)
     {
         if (teleportTarget != null)
         {

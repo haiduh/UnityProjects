@@ -38,17 +38,19 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    private void FollowPlayer()
-    {
-        // Check player's facing direction to apply the correct look-ahead offset
-        float directionMultiplier = player.localScale.x > 0 ? 1f : -1f; // If player is facing right, lookAhead is positive; if left, negative
+private void FollowPlayer()
+{
+    // Check player's facing direction to apply the correct look-ahead offset
+    float directionMultiplier = player.localScale.x > 0 ? 1f : -1f; // If player is facing right, lookAhead is positive; if left, negative
 
-        // Adjust the lookAhead based on player's facing direction
-        lookAhead = Mathf.Lerp(lookAhead, followOffset.x * directionMultiplier, Time.deltaTime * cameraSpeed);
+    // Adjust the lookAhead based on player's facing direction
+    lookAhead = Mathf.Lerp(lookAhead, followOffset.x * directionMultiplier, Time.deltaTime * cameraSpeed);
 
-        // Set camera's position based on the player's position and look-ahead offset
-        transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
-    }
+    // Set camera's position based on the player's position, look-ahead offset, and player's Y position
+    // The camera will now follow the player both horizontally (X) and vertically (Y) using followOffset
+    transform.position = new Vector3(player.position.x + lookAhead + followOffset.x, player.position.y + followOffset.y, transform.position.z);
+}
+
 
     private void HandleLevelTransition()
     {
@@ -85,7 +87,7 @@ public class CameraMovement : MonoBehaviour
     }
 
     public void MovetoNewEnvironment(Transform newEnvironment)
-    { 
+    {
         StartCoroutine(PerformTransition(newEnvironment));
     }
 
@@ -141,6 +143,7 @@ public class CameraMovement : MonoBehaviour
             blackScreen.gameObject.SetActive(false);
         }
     }
+
     public void FollowMode()
     {
         if (follow)
@@ -154,6 +157,4 @@ public class CameraMovement : MonoBehaviour
             Debug.Log("Follow mode disabled.");
         }
     }
-
-
 }

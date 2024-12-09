@@ -92,5 +92,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Boss: {fileID: 0}
   HealthBar: {fileID: 0}
-  bgMusic: {fileID: 0}
-  bossMusic: {fileID: 8300000, guid: e03d2eceb61977a4996d36a58079fef9, type: 3}
+  bossMusic: {fileID: 8300000, guid: 87db33941f67a4c44828b10de25de85d, type: 3}

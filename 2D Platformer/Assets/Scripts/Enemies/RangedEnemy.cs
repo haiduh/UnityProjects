@@ -59,6 +59,11 @@ public class RangedEnemy : MonoBehaviour
         {
             fireballs[fireballIndex].transform.position = firePoint.position;
             fireballs[fireballIndex].GetComponent<EnemyProjectiles>().ActivateProjectile();
+            Debug.Log("Firing Fireball at index: " + fireballIndex); // Log the index of the fired fireball
+        }
+        else
+        {
+            Debug.LogWarning("No available fireballs to shoot!"); // Log when no available fireballs are found
         }
     }
 
@@ -67,10 +72,16 @@ public class RangedEnemy : MonoBehaviour
         for (int i = 0; i < fireballs.Length; i++)
         {
             if (!fireballs[i].activeInHierarchy)
+            {
+                Debug.Log("Found inactive fireball at index: " + i); // Log which fireball was found to be inactive
                 return i; // Return the index of an inactive fireball
+            }
         }
-        return -1; // No inactive fireballs available
+        return -1; // Return -1 if no inactive fireballs are found
     }
+
+
+
 
     private bool playerVisible()
     {

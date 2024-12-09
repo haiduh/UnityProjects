@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Persist the first instance
+            //DontDestroyOnLoad(gameObject); // Persist the first instance
         }
         else if (instance != this)
         {

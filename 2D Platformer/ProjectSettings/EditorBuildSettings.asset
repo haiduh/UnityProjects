@@ -6,18 +6,27 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Levels/_MainMenu.unity
+    path: Assets/Scenes/_MainMenu.unity
     guid: a8b8c146313501a4b9600ebeebbb39ce
   - enabled: 1
-    path: Assets/Levels/Level1.unity
+    path: Assets/Scenes/Level1Cutscene.unity
+    guid: 35fc05f5b448aed4aa25b02b21ae3418
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Levels/Level2Joke.unity
-    guid: f6940e43c916fbc4d99b784ceea76390
+    path: Assets/Scenes/Level2Cutscene.unity
+    guid: 41d1d8b73ed554d4c862c06b4b49e098
   - enabled: 1
-    path: Assets/Levels/Level2.unity
+    path: Assets/Scenes/Levels/Level2.unity
     guid: e3fba5c5056d9fb438cd537e8f7b746f
   - enabled: 1
-    path: Assets/Levels/Level3 (Boss Level).unity
+    path: Assets/Scenes/Level3Cutscene.unity
+    guid: f1fb12c84335c534c9595bd69107b71c
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level3 (Boss Level).unity
     guid: 9dbe2524af5768149b33851752f4a6bb
+  - enabled: 1
+    path: Assets/Scenes/WIn Screen.unity
+    guid: fcc873f9cfd57e34c86a41d8efc5f13c
   m_configObjects: {}

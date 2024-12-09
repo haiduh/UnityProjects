@@ -201,8 +201,8 @@ MonoBehaviour:
   jump: 20
   airTime: 0.25
   extraJumps: 1
-  wallJumpX: 3000
-  wallJumpY: 750
+  wallJumpX: 8
+  wallJumpY: 15
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

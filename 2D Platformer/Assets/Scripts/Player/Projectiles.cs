@@ -32,7 +32,7 @@ public class Projectiles : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Iceball") && !collision.CompareTag("Transition") && !collision.CompareTag("Trap"))
+        if (!collision.CompareTag("Iceball") && !collision.CompareTag("Transition") && !collision.CompareTag("Trap") && !collision.CompareTag("Health"))
             { 
                 hit = true;
                 animator.SetTrigger("explode");

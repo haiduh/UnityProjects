@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,13 +21,14 @@ public class BossHealth : MonoBehaviour
     [SerializeField] private Behaviour[] components; // Components to disable on death
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject finishObj;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip hurtSound;
     [SerializeField] private AudioClip enragedSound;
 
-    [Header("UI (Optional)")]
+    [Header("UI")]
     [SerializeField] private Slider healthBar;
 
     private void Start()
@@ -35,10 +37,7 @@ public class BossHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
-    /// <summary>
     /// Handles damage taken by the boss.
-    /// </summary>
-    /// <param name="damage">Amount of damage dealt to the boss.</param>
     public void TakeDamage(float damage)
     {
         if (dead) return;
@@ -63,9 +62,7 @@ public class BossHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
-    /// <summary>
     /// Checks if the boss should enter the enraged state.
-    /// </summary>
     private void CheckEnrageState()
     {
         if (!isEnraged && currentHealth <= enragedThreshold)
@@ -76,9 +73,8 @@ public class BossHealth : MonoBehaviour
             StartCoroutine(Invulnerability());
         }
     }
-    /// <summary>
+
     /// Handles the death of the boss.
-    /// </summary>
     public void Die()
     {
         if (dead) return;
@@ -111,9 +107,7 @@ public class BossHealth : MonoBehaviour
         Destroy(gameObject, 8f);
     }
 
-    /// <summary>
-    /// Updates the health bar (if present).
-    /// </summary>
+    /// Updates the health bar.
     private void UpdateHealthBar()
     {
         if (healthBar != null)
@@ -134,8 +128,20 @@ public class BossHealth : MonoBehaviour
         }
         Physics2D.IgnoreLayerCollision(12, 8, false);
     }
+
+    private void finishObject()
+    {
+        if (finishObj != null)
+        {
+            finishObj.SetActive(true); // Activate the finish object
+            animator.SetBool("idle", true); // Ensure the finish object animator is set to idle
+        }
+    }
+
+
     public bool IsEnraged()
     {
         return isEnraged;
     }
+
 }
