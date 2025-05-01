@@ -59,7 +59,7 @@ To play "Norman's Adventure," follow these steps:
 
 #### Screenshots (Work in progress)
 
-![Norman's snowy journey](https://github.com/user-attachments/assets/snowy-landscape-placeholder.png)
+![image](https://github.com/user-attachments/assets/b374d667-ba0c-45d3-9aec-3d5c9fd08834)
 
 ## Technologies Used
 - **Unity**: Game development platform.
