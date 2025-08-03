@@ -2,7 +2,7 @@
 
 Welcome to my collection of Unity projects! Here you'll find details about various games and applications I've developed using the Unity engine, showcasing my skills in game development, design, and programming. Currently, I have started working on a VR game featuring a 3D hand model created in Blender.
 
-Visit the project showcase here: [Unity Projects](https://haiduh.github.io/UnityProjects/)
+Visit the game showcase here: [Unity Projects](https://haiduh.github.io/UnityProjects/)
 
 ## Table of Contents
 
